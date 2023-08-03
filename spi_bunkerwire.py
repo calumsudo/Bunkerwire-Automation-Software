@@ -6,6 +6,12 @@ import tkinter as tk
 from tkinter import filedialog
 import openpyxl  # Import the openpyxl library
 
+# Create the main window
+root = tk.Tk()
+root.title("SPI Bunkerwire Automation")
+
+
+
 #Extract and Format Date Function Completed
 def extract_and_format_date(pdf_file_path):
     with open(pdf_file_path, 'rb') as file:
@@ -75,6 +81,9 @@ def browse_excel():
     excel_entry.insert(tk.END, file_path)
 
 
+def print_message(message):
+    messages_label.config(text=messages_label.cget('text') + message + "\n")
+
 def submit_files():
     pdf_file = pdf_entry.get()
     excel_file = excel_entry.get()
@@ -82,14 +91,9 @@ def submit_files():
     if pdf_file:
         # Extract and format the date
         date = extract_and_format_date(pdf_file)
-        if date:
-            print(f"Date found: {date}")
-        else:
-            print("Date not found in the PDF.")
 
         # Extract and display data
         data_values = extract_and_display_data(pdf_file)
-        print(data_values)
 
         if excel_file:
             # Load the existing Excel file
@@ -111,15 +115,12 @@ def submit_files():
             # Save the Excel file
             wb.save(excel_file)
 
-            print("Data appended to the Excel file.")
+            print_message("Data appended to the Excel file.")
         else:
-            print("Please upload an Excel file.")
+            print_message("Please upload an Excel file.")
     else:
-        print("Please upload a PDF file.")
+        print_message("Please upload a PDF file.")
 
-# Create the main window
-root = tk.Tk()
-root.title("SPI Bunkerwire Automation")
 
 # Create frames to organize the sections
 pdf_frame = tk.Frame(root)
@@ -146,6 +147,12 @@ excel_button.pack(side=tk.LEFT)
 # Submit button
 submit_button = tk.Button(root, text="Submit", command=submit_files)
 submit_button.pack(pady=20)
+
+
+# Create a Text widget to display messages
+# Create a Label widget to display messages
+messages_label = tk.Label(root, height=5, width=70, wraplength=500, anchor='w', justify='center')
+messages_label.pack(pady=1)
 
 # Start the main event loop
 root.mainloop()
