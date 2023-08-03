@@ -1,0 +1,3 @@
+([('SPI_Bunkerwire',
+   '/Users/calumsiemer/Documents/Code/SPI/dist/SPI_Bunkerwire',
+   'EXECUTABLE')],)
